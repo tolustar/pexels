@@ -5,7 +5,7 @@
             
         </div>
 
-        <div class="container-fluid bg-dark">
+        <div class="container-fluid bg-dark py-3">
             <div class="row">
                 <div class="col-md-4">
                     <router-link :to="{name: 'home'}">
