@@ -38,6 +38,26 @@
       </div>
     </div>
 
+
+    <div>
+      <h2 class="text-center mt-5">Trending Photos</h2>
+      <div class="container">
+          <div class="row">
+            <div class="col-md-3" v-for="photo in photos" :key="photo.id">
+                <div class="mb-4 pa-2">
+                  <img :src="photo.src.medium" alt="" class="trending_photos" />
+                  <div class="card photographer">
+                    <small class="card-title text-white"><v-icon color="#fff">mdi-camera</v-icon> {{photo.photographer}}</small>
+                  </div>
+                </div>
+            </div>
+          </div>
+      </div>
+      <div class="d-flex flex-row justify-content-center">
+          <v-btn color="#237e71" class="mb-5 mt-2 text-white" v-if="photos.length != 0" @click="load_trending_photos()" :loading="loading_photos" :disabled="loading_photos">Load More</v-btn>
+      </div>
+    </div>
+
     
 
   </div>
@@ -49,11 +69,22 @@
   background-repeat: no-repeat;
   background-position: cover;
 }
+
+.trending_photos{
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.photographer{
+  background-color: #237e71;
+  padding-top: 8px;
+}
 </style>
 
 <script>
 import pwaInstallHandler from 'pwa-install-handler'
-
+import axios from 'axios'
 
 export default {
   name: "home",
@@ -61,11 +92,14 @@ export default {
   data() {
     return {
       show_pwa_prompt: false,
-      message: '',
+      photos: [],
+      photo_page: 1,
+      loading_photos: false,
     };
   },
   created() {
     this.check_if_device_can_install_pwa();
+    this.load_trending_photos();
   },
   computed: {},
   methods: {
@@ -87,6 +121,28 @@ export default {
       });
     
       this.show_pwa_prompt = false;
+    },
+
+    load_trending_photos(){
+      this.loading_photos = true;
+
+      axios
+      .get("https://api.pexels.com/v1/curated?per_page=16&page=" + this.photo_page,{ 
+          params: {},
+          headers: {
+            "Authorization": "563492ad6f91700001000001daceeaf5b0f84a8299f1817f13f87e13"
+          } 
+      })
+      .then(response => {
+        this.photos = this.photos.concat(response.data.photos);
+        this.photo_page = this.photo_page + 1;
+        this.loading_photos = false;
+
+        console.log("response", response);
+      })
+      .catch(()=>{
+        this.loading_photos = false;
+      });
     }
   }
 };
