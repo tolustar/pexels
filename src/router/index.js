@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
 import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 
@@ -22,12 +23,11 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   scrollBehavior(to) {
-    if(to.query.page == null){
-      
+    if (to.query.page == null) {
       return {
         x: 0,
         y: 0
-      }
+      };
     }
   },
   routes
