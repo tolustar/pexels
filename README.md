@@ -1,39 +1,24 @@
-# pexels
+## Pexels
 
-## Project setup
-```
-npm install
-```
+- This project is a Progressive Web App built using Vue.js for searching and downloading pictures from Pexels.com using their public API.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Features
+- A search page with a field for entering search term and submit button
+- Results is loaded on /results routes with 20 results per page.
+- Results page have a next and previous button
+- Click or tap on any of the results should load the image into a component, showing the image meta like photographer info and download button
+- App is responsive with consistent design
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Run your tests
-```
-npm run test
-```
+## Visual representation
+- Open a browser and visit [https://pexels.tolustar.com](https://pexels.tolustar.com)
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
+## Developer
+Olaogun Daniel Toluwalase 
 
-### Run your unit tests
-```
-npm run test:unit
-```
+[https://tolustar.com](https://tolustar.com)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+08039144365
+
+[https://www.linkedin.com/in/olaogun-daniel-toluwalase-473059b0/](https://www.linkedin.com/in/olaogun-daniel-toluwalase-473059b0/)
