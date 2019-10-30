@@ -8,6 +8,8 @@
 - Results page have a next and previous button
 - Click or tap on any of the results should load the image into a component, showing the image meta like photographer info and download button
 - App is responsive with consistent design
+- App is a PWA and can be installed on chrome browser
+
 
 
 ## Visual representation
