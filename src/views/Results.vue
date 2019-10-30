@@ -76,7 +76,7 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="success" class="btn btn-success mr-2" @click="download()"> Download</v-btn>
+                    <v-btn color="success" class="btn btn-success mr-2" @click="download()" :disabled="downloading_image" :loading="downloading_image"> Download</v-btn>
                     <v-btn color="danger" @click="dialog = false">
                         Close
                     </v-btn>
@@ -119,6 +119,7 @@ export default {
             search_param: this.$route.params.search,
             dialog: false,
             check_if_search_is_empty: null,
+            downloading_image: false,
             selected_photo: {
                 photographer: '',
                 photographer_url: '',
@@ -194,14 +195,24 @@ export default {
         },
 
         download(){
-            const url = window.URL.createObjectURL(new Blob([this.selected_photo.src.original]))
-            const link = document.createElement('a')
-            link.href = url
-            link.setAttribute('download', this.selected_photo.photographer_id + '.jpeg') //or any other extension
-            document.body.appendChild(link)
-            link.click()
-        }
-    },
+
+            this.downloading_image = true;
+
+            axios({
+            url: this.selected_photo.src.original,
+            method: 'GET',
+            responseType: 'blob', // important
+            }).then((response) => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', this.selected_photo.photographer_id + '.jpeg'); //or any other extension
+                document.body.appendChild(link);
+                link.click();
+                this.downloading_image = false;
+            })
+        },
+    }
 }
 
 </script>
