@@ -2,7 +2,7 @@
   <div class="home">
    
    <div>
-      <v-banner dark :sticky="true" :single-line="true" elevation="12" v-if="show_pwa_prompt == true">
+      <v-banner dark :sticky="true" :single-line="false" elevation="12" v-if="show_pwa_prompt == true">
         
         Do you want to install this app on your device
 
@@ -16,7 +16,7 @@
 
     <div class="d-flex flex-column align-items-center justify-content-center home_banner" style="height: 80vh">
       <div>
-        <img src="./../assets/logo.png" />
+        <img src="./../assets/logo.png" style="width: 70px" />
       </div>
       <h1 class="text-center text-white mt-3">Pexels</h1>
       <h5 class="text-center text-white mt-2">
@@ -26,9 +26,9 @@
       <div class="form-group" style="width: 70vw">
         <label for=""></label>
         <input type="text" class="form-control" style="height: 60px;" aria-describedby="helpId" placeholder="Search for free photos and videos" v-model="search_param"/>
-        <p id="helpId" class="form-text text-muted">
+        <div id="helpId" class="form-text text-muted">
           Suggested: smile, love, happiness
-        </p>
+        </div>
       </div>
 
       <div>

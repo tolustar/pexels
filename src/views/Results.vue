@@ -27,7 +27,11 @@
             </div>
         </div>
 
-        <div class="container">
+        <div class="text-center mt-4">
+            <h2>{{search_param}}</h2>
+        </div>
+
+        <div class="container mt-4">
             <div class="row">
                 <div class="col-md-3" v-for="photo in photos" :key="photo.id">
                     <div class="mb-4 pa-2" @click="select_photo(photo)" style="cursor: pointer">
