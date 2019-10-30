@@ -1,10 +1,6 @@
 <template>
   <div>
 
-        <div class="d-flex flex=row">
-            
-        </div>
-
         <div class="container-fluid bg-dark py-3">
             <div class="row">
                 <div class="col-md-4">
@@ -17,7 +13,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="input-group pr-5">
-                        <input type="text" class="form-control" v-model="search_param" placeholder="Search for free photos and videos" aria-label="Search for free photos and videos" aria-describedby="button-search">
+                        <input type="text" class="form-control" v-model="search_param" placeholder="Search for free photos" aria-label="Search for free photos" aria-describedby="button-search">
                         <div class="input-group-append">
                             <button class="btn btn-secondary" type="button" id="button-search" @click="search()">Search</button>
                         </div>

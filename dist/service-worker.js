@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.511aa499263978bc27090ccc606fc8d4.js"
+  "/precache-manifest.1ade8448b7be013f1693b06fba29be6a.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "pexels"});

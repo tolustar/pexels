@@ -20,12 +20,12 @@
       </div>
       <h1 class="text-center text-white mt-3">Pexels</h1>
       <h5 class="text-center text-white mt-2">
-        The best free stock photos & videos shared by talented creators.
+        The best free stock photos shared by talented creators.
       </h5>
 
       <div class="form-group" style="width: 70vw">
         <label for=""></label>
-        <input type="text" class="form-control" style="height: 60px;" aria-describedby="helpId" placeholder="Search for free photos and videos" v-model="search_param"/>
+        <input type="text" class="form-control" style="height: 60px;" aria-describedby="helpId" placeholder="Search for free photos" v-model="search_param"/>
         <div id="helpId" class="form-text text-muted">
           Suggested: smile, love, happiness
         </div>
