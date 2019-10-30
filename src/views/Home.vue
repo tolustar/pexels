@@ -40,7 +40,7 @@
 
 
     <div>
-      <h2 class="text-center mt-5">Trending Photos</h2>
+      <h2 class="text-center mt-12 mb-8">Trending Photos</h2>
       <div class="container">
           <div class="row">
             <div class="col-md-3" v-for="photo in photos" :key="photo.id">
@@ -105,6 +105,11 @@
 .photographer{
   background-color: #237e71;
   padding-top: 8px;
+}
+
+.v-banner.v-sheet.v-sheet--tile.theme--dark.elevation-12.v-banner--sticky {
+    position: fixed !important;
+    width: 100%;
 }
 </style>
 
