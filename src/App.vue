@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view />
+    <v-app>
+      <router-view />
+    </v-app>
   </div>
 </template>
 
@@ -29,6 +31,12 @@ h3 {
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    background-color: transparent;
   }
 }
 </style>

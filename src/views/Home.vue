@@ -25,14 +25,14 @@
 
       <div class="form-group" style="width: 70vw">
         <label for=""></label>
-        <input type="text" class="form-control" style="height: 60px;" aria-describedby="helpId" placeholder="Search for free photos and videos"/>
+        <input type="text" class="form-control" style="height: 60px;" aria-describedby="helpId" placeholder="Search for free photos and videos" v-model="search_param"/>
         <p id="helpId" class="form-text text-muted">
           Suggested: smile, love, happiness
         </p>
       </div>
 
       <div>
-        <button type="button" name="" id="" class="btn bg-white btn-lg btn-block mt-2">
+        <button type="button" name="" id="" class="btn bg-white btn-lg btn-block mt-2" :to="{name:results, params:{search: search_param}}">
           Search
         </button>
       </div>
@@ -95,6 +95,7 @@ export default {
       photos: [],
       photo_page: 1,
       loading_photos: false,
+      search_param: '',
     };
   },
   created() {
@@ -127,7 +128,7 @@ export default {
       this.loading_photos = true;
 
       axios
-      .get("https://api.pexels.com/v1/curated?per_page=20&page=" + this.photo_page,{ 
+      .get("https://api.pexels.com/v1/popular?per_page=20&page=" + this.photo_page,{ 
           params: {},
           headers: {
             "Authorization": "563492ad6f91700001000001daceeaf5b0f84a8299f1817f13f87e13"
