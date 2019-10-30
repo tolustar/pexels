@@ -127,7 +127,7 @@ export default {
       this.loading_photos = true;
 
       axios
-      .get("https://api.pexels.com/v1/curated?per_page=16&page=" + this.photo_page,{ 
+      .get("https://api.pexels.com/v1/curated?per_page=20&page=" + this.photo_page,{ 
           params: {},
           headers: {
             "Authorization": "563492ad6f91700001000001daceeaf5b0f84a8299f1817f13f87e13"
