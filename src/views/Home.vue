@@ -32,9 +32,9 @@
       </div>
 
       <div>
-        <button type="button" name="" id="" class="btn bg-white btn-lg btn-block mt-2" :to="{name:results, params:{search: search_param}}">
+        <router-link type="button" name="" id="" class="btn bg-white btn-lg btn-block mt-2" :to="{name:'results', params:{search: search_param}}">
           Search
-        </button>
+        </router-link>
       </div>
     </div>
 
@@ -44,7 +44,7 @@
       <div class="container">
           <div class="row">
             <div class="col-md-3" v-for="photo in photos" :key="photo.id">
-                <div class="mb-4 pa-2">
+                <div class="mb-4 pa-2" @click="select_photo(photo)" style="cursor: pointer">
                   <img :src="photo.src.medium" alt="" class="trending_photos" />
                   <div class="card photographer">
                     <small class="card-title text-white"><v-icon color="#fff">mdi-camera</v-icon> {{photo.photographer}}</small>
@@ -57,6 +57,32 @@
           <v-btn color="#237e71" class="mb-5 mt-2 text-white" v-if="photos.length != 0" @click="load_trending_photos()" :loading="loading_photos" :disabled="loading_photos">Load More</v-btn>
       </div>
     </div>
+
+    <v-dialog v-model="dialog" width="80%">
+        
+        <v-card>
+                    
+            <v-card-text>
+                <img class="py-3" :src="selected_photo.src.large2x" style="width: 55vw; height: 50vh; object-fit: cover;" />
+
+                <div><strong>Photographer - {{selected_photo.photographer}}</strong></div>
+
+                <v-btn class="mt-2" target="_blank" outlined small :href="selected_photo.photographer_url">View Profile</v-btn>
+
+                
+            </v-card-text>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="success" class="btn btn-success mr-2" @click="download()"> Download</v-btn>
+                <v-btn color="danger" @click="dialog = false">
+                    Close
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 
     
 
@@ -96,6 +122,14 @@ export default {
       photo_page: 1,
       loading_photos: false,
       search_param: '',
+      selected_photo: {
+          photographer: '',
+          photographer_url: '',
+          src: {
+              large2x: '',
+          }
+      },
+      dialog: false,
     };
   },
   created() {
@@ -144,6 +178,22 @@ export default {
       .catch(()=>{
         this.loading_photos = false;
       });
+    },
+
+    select_photo(photo){
+        this.selected_photo = photo;
+        this.dialog = !this.dialog;
+
+        console.log("photo", this.selected_photo);
+    },
+
+    download(){
+        const url = window.URL.createObjectURL(new Blob([this.selected_photo.src.original]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', this.selected_photo.photographer_id + '.jpeg') //or any other extension
+        document.body.appendChild(link)
+        link.click()
     }
   }
 };

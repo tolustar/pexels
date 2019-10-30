@@ -33,9 +33,9 @@ h3 {
     }
   }
 
-  a {
+  a:hover {
     color: inherit;
-    text-decoration: none;
+    text-decoration: none !important;
     background-color: transparent;
   }
 }

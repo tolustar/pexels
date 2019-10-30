@@ -1,52 +1,56 @@
 <template>
   <div>
 
-      <div class="d-flex flex=row">
-          
-      </div>
+        <div class="d-flex flex=row">
+            
+        </div>
 
-      <div class="container-fluid bg-dark">
-          <div class="row">
-              <div class="col-md-4">
-                <router-link :to="{name: 'home'}">
-                <div class="text-left pl-5">
-                    <img src="./../assets/logo.png" height="40px" />
-                    <span class="text-white ml-3">Pexels</span>
+        <div class="container-fluid bg-dark">
+            <div class="row">
+                <div class="col-md-4">
+                    <router-link :to="{name: 'home'}">
+                    <div class="text-left pl-5">
+                        <img src="./../assets/logo.png" height="40px" />
+                        <span class="text-white ml-3">Pexels</span>
+                    </div>
+                    </router-link>
                 </div>
-                </router-link>
-              </div>
-              <div class="col-md-6">
-                <div class="input-group pr-5">
-                    <input type="text" class="form-control" v-model="search_param" placeholder="Search for free photos and videos" aria-label="Search for free photos and videos" aria-describedby="button-search">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button" id="button-search" @click="search()">Search</button>
+                <div class="col-md-6">
+                    <div class="input-group pr-5">
+                        <input type="text" class="form-control" v-model="search_param" placeholder="Search for free photos and videos" aria-label="Search for free photos and videos" aria-describedby="button-search">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button" id="button-search" @click="search()">Search</button>
+                        </div>
                     </div>
                 </div>
-              </div>
-              <div class="col-md-2"></div>
-          </div>
-      </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
 
-      <div class="container">
-          <div class="row">
-            <div class="col-md-3" v-for="photo in photos" :key="photo.id">
-                <div class="mb-4 pa-2" @click="select_photo(photo)" style="cursor: pointer">
-                  <img :src="photo.src.medium" alt="" class="search_photos" />
-                  <div class="card photographer">
-                    <small class="card-title text-white"><v-icon color="#fff">mdi-camera</v-icon> {{photo.photographer}}</small>
-                  </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3" v-for="photo in photos" :key="photo.id">
+                    <div class="mb-4 pa-2" @click="select_photo(photo)" style="cursor: pointer">
+                    <img :src="photo.src.medium" alt="" class="search_photos" />
+                    <div class="card photographer">
+                        <small class="card-title text-white"><v-icon color="#fff">mdi-camera</v-icon> {{photo.photographer}}</small>
+                    </div>
+                    </div>
                 </div>
             </div>
-          </div>
-      </div>
-      
-      <div class="d-flex flex-row justify-content-center">
-          <v-btn v-if="photos.length != 0" color="#237e71" class="mb-5 mt-2 text-white" @click="load_photos('previous')" :disabled="photo_page == 1">Previous</v-btn> 
-          
-          <v-btn class="mb-5 mt-2 mx-3" outlined :loading="loading_photos">{{photo_page}}</v-btn> 
-          
-          <v-btn v-if="photos.length != 0" color="#237e71" class="mb-5 mt-2 text-white" @click="load_photos('next')">Next</v-btn>
-      </div>
+        </div>
+        
+        <div class="d-flex flex-row justify-content-center">
+            <v-btn v-if="photos.length != 0" color="#237e71" class="mb-5 mt-2 text-white" @click="load_photos('previous')" :disabled="photo_page == 1">Previous</v-btn> 
+            
+            <v-btn class="mb-5 mt-2 mx-3" v-if="check_if_search_is_empty != true" outlined :loading="loading_photos">{{photo_page}}</v-btn> 
+            
+            <v-btn v-if="photos.length != 0" color="#237e71" class="mb-5 mt-2 text-white" @click="load_photos('next')">Next</v-btn>
+        </div>
+
+        <div class="text-center" v-if="check_if_search_is_empty == true">
+            <h2>Sorry we could not find pictures that match your query, please try another word</h2>
+        </div>
 
 
         <v-dialog v-model="dialog" width="80%">
@@ -55,7 +59,7 @@
             <v-card>
                         
                 <v-card-text>
-                    <img class="py-3" :src="selected_photo.src.large2x" style="width: 55vw" />
+                    <img class="py-3" :src="selected_photo.src.large2x" style="width: 55vw; height: 50vh; object-fit: cover;" />
 
                     <div><strong>Photographer - {{selected_photo.photographer}}</strong></div>
 
@@ -68,7 +72,7 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <a class="btn btn-success mr-2 text-white" download :href="selected_photo.src.original"> Download</a>
+                    <v-btn color="success" class="btn btn-success mr-2" @click="download()"> Download</v-btn>
                     <v-btn color="danger" @click="dialog = false">
                         Close
                     </v-btn>
@@ -110,6 +114,7 @@ export default {
             loading_photos: false,
             search_param: this.$route.params.search,
             dialog: false,
+            check_if_search_is_empty: null,
             selected_photo: {
                 photographer: '',
                 photographer_url: '',
@@ -145,6 +150,10 @@ export default {
                 this.photos = response.data.photos;
                 this.loading_photos = false;
 
+                if(this.photos.length == 0){
+                    this.check_if_search_is_empty = true;
+                }
+
                 document.body.scrollTop = 0; // For Safari
                 document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 
@@ -167,6 +176,9 @@ export default {
 
         search(){
             this.photo_page = 1;
+            this.$route.params.search = this.search_param;
+
+            this.$router.push({name: 'results', params:{search: this.search_param}});
             this.load_search_parameter();
         },
 
@@ -175,6 +187,15 @@ export default {
             this.dialog = !this.dialog;
 
             console.log("photo", this.selected_photo);
+        },
+
+        download(){
+            const url = window.URL.createObjectURL(new Blob([this.selected_photo.src.original]))
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute('download', this.selected_photo.photographer_id + '.jpeg') //or any other extension
+            document.body.appendChild(link)
+            link.click()
         }
     },
 }
